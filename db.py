@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
 # Create the engine
-engine = create_engine('sqlite:///business_intelligence.db', echo=True)
 
 # Create the base class for declarative models
 Base = declarative_base()
@@ -14,17 +13,16 @@ class Retailers(Base):
     Retailer table
     """
     __tablename__ = 'retailers'
-    retailer_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String)
-    total_sales = Column(Integer)
-    product_id = Column(Integer)
+    
 class Invoice(Base):
     """
     Invoice table
     """
     __tablename__ = 'invoice'
     invoice_id = Column(Integer, primary_key=True)
-    retailer_id = Column(Integer, ForeignKey('retailers.retailer_id'))
+    retailer_id = Column(Integer, ForeignKey('retailers.id'))
     retailer = relationship("Retailers")
     product_id = Column(Integer, ForeignKey('products.id'))
     product = relationship("Products")
@@ -74,8 +72,6 @@ class Products(Base):
     name = Column(String)
     price = Column(Integer)
 
-# Create all tables
-Base.metadata.create_all(engine)
 
 # Define the Facts table
 class Facts(Base):
@@ -84,11 +80,9 @@ class Facts(Base):
     """
     __tablename__ = 'facts'
     id = Column(Integer, primary_key=True)
-    retailer_id = Column(Integer, ForeignKey('retailers.retailer_id'))
+    retailer_id = Column(Integer, ForeignKey('retailers.id'))
     retailer = relationship("Retailers")
     product_id = Column(Integer, ForeignKey('products.id'))
     product = relationship("Products")
     city_id = Column(Integer, ForeignKey('city.city_id'))
     city = relationship("City")
-   
-Base.metadata.create_all(engine)    
