@@ -25,11 +25,11 @@ class Invoice(Base):
     __tablename__ = 'invoice'
     invoice_id = Column(Integer, primary_key=True)
     retailer_id = Column(Integer, ForeignKey('retailers.retailer_id'))
-    retailer = relationship("Retailers"),
-    product_id = Column(Integer, ForeignKey('products.id')),
-    product = relationship("Products"),
-    units_sold = Column(Integer),
-    date = Column(String),
+    retailer = relationship("Retailers")
+    product_id = Column(Integer, ForeignKey('products.id'))
+    product = relationship("Products")
+    units_sold = Column(Integer)
+    date = Column(String)
     total_sales = Column(Integer)
 
 
@@ -71,7 +71,7 @@ class Products(Base):
     """
     __tablename__ = 'products'
     id = Column(Integer, primary_key=True)
-    name = Column(String),
+    name = Column(String)
     price = Column(Integer)
 
 # Create all tables
