@@ -46,9 +46,9 @@ class States(Base):
     States table
     """
     __tablename__ = 'states'
-    state_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String)
-    region_id = Column(Integer, ForeignKey('regions.id'))
+    region_name = Column(String, ForeignKey('regions.name'))
     region = relationship("Regions")
 
 # Define the City table
@@ -57,9 +57,9 @@ class City(Base):
     Cities table
     """
     __tablename__ = 'city'
-    city_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String)
-    state_id = Column(Integer, ForeignKey('states.state_id'))
+    state_name = Column(Integer, ForeignKey('states.name'))
     state = relationship("States")
 
 # Define the Products table
@@ -84,5 +84,5 @@ class Facts(Base):
     retailer = relationship("Retailers")
     product_id = Column(Integer, ForeignKey('products.id'))
     product = relationship("Products")
-    city_id = Column(Integer, ForeignKey('city.city_id'))
+    city_id = Column(Integer, ForeignKey('city.id'))
     city = relationship("City")
