@@ -31,7 +31,7 @@ regions_obj = {
 cities_df = df[['City', 'State']].drop_duplicates(subset=['City'])
 
 #invoice dataframe
-invoice_df = df[['Invoice Date', 'Product', 'Retailer', 'Units Sold', 'Total Sales', 'Operating Profit', 'Operating Margin', 'Sales Method' ]].drop_duplicates(subset=['Invoice Date'])
+invoice_df = df[['Invoice Date', 'Product', 'Retailer', 'State', 'Region', 'City', 'Units Sold', 'Total Sales', 'Operating Profit', 'Operating Margin', 'Sales Method' ]].drop_duplicates(subset=['Invoice Date'])
 start_date = datetime.strptime('2020-01-01', '%Y-%m-%d')
 
 session.add_all([Retailers(name=row['Retailer'])
@@ -53,6 +53,9 @@ session.add_all([City(name=row['City'], state_name=row['State'])
 session.add_all([Invoice(date=start_date + timedelta(days=i),
                          retailer_id=session.query(Retailers.id).filter(Retailers.name == row['Retailer']).first()[0],
                          product_id=session.query(Products.id).filter(Products.name == row['Product']).first()[0],
+                         region_id=session.query(Regions.id).filter(Regions.name == row['Region']).first()[0],
+                            state_id=session.query(States.id).filter(States.name == row['State']).first()[0],
+                        city_id=session.query(City.id).filter(City.name == row['City']).first()[0],
                          units_sold=row['Units Sold'],
                          total_sales=row['Total Sales'],
                          operating_profit=row['Operating Profit'],
