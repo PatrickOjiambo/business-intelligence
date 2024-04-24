@@ -21,7 +21,7 @@ class Invoice(Base):
     Invoice table
     """
     __tablename__ = 'invoice'
-    invoice_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     retailer_id = Column(Integer, ForeignKey('retailers.id'))
     retailer = relationship("Retailers")
     product_id = Column(Integer, ForeignKey('products.id'))
@@ -29,6 +29,9 @@ class Invoice(Base):
     units_sold = Column(Integer)
     date = Column(String)
     total_sales = Column(Integer)
+    sales_method = Column(String),
+    operating_profit = Column(Integer)
+    operating_margin = Column(Integer)
 
 
 # Define the Regions table
