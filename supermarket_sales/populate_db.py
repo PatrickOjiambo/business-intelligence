@@ -22,11 +22,22 @@ class Populate:
         Populate the database
         """
         # branch dataframe
-        
-        branch_df = self.df[["Branch"]].drop_duplicates(subset=["Branch"])
-        print(branch_df)
 
+        branch_df = self.df[["Branch"]].drop_duplicates(subset=["Branch"])
+        # Product dataframe
+        product_df = self.df[["Product line", "Unit price"]].drop_duplicates(
+            subset=["Product line"]
+        )
+        # city dataframe
+        city_df = self.df[["City"]].drop_duplicates(subset=["City"])
         self.session.add_all([Branch(name=branch) for branch in branch_df["Branch"]])
+        self.session.add_all(
+            [
+                Product(name=row["Product line"], price=row["Unit price"])
+                for index, row in product_df.iterrows()
+            ]
+        )
+        self.session.add_all([City(name=city) for city in city_df["City"]])
         self.session.commit()
 
 
