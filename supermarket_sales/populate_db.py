@@ -39,7 +39,6 @@ class Populate:
                 "Tax 5%",
                 "Quantity",
                 "Date",
-               
                 "Payment",
                 "cogs",
                 "gross margin percentage",
@@ -47,7 +46,7 @@ class Populate:
                 "Rating",
             ]
         ]
-
+        fact_df = self.df.drop_duplicates(subset=["Invoice ID"])
         self.session.add_all([Branch(name=branch) for branch in branch_df["Branch"]])
         self.session.add_all(
             [
@@ -64,7 +63,6 @@ class Populate:
                     tax=row["Tax 5%"],
                     quantity=row["Quantity"],
                     date=row["Date"],
-                    
                     payment=row["Payment"],
                     cost_of_goods=row["cogs"],
                     gross_margin_percentage=row["gross margin percentage"],
@@ -74,6 +72,23 @@ class Populate:
                 for index, row in invoice_df.iterrows()
             ]
         )
+        print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWwwWWWWWWWWW")
+        self.session.add_all(
+            FactTable(
+                invoice_id=row["Invoice ID"],
+                branch_id=session.query(Branch.id)
+                .filter(Branch.name == row["Branch"])
+                .first()[0],
+                product_id=session.query(Product.id)
+                .filter(Product.name == row["Product line"])
+                .first()[0],
+                city_id=session.query(City.id)
+                .filter(City.name == row["City"])
+                .first()[0],
+            )
+            for index, row in fact_df.iterrows()
+        )
+
         self.session.commit()
 
 
