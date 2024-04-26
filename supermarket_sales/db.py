@@ -23,7 +23,7 @@ class City(Base):
 
 class Invoice(Base):
     __tablename__ = 'invoice'
-    id = Column(Integer, primary_key=True)
+    invoice_id = Column(Integer, primary_key=True)
     customer_type = Column(String)
     tax = Column(Float)
     quantity = Column(Integer)
@@ -41,7 +41,7 @@ class FactTable(Base):
     branch_id = Column(Integer, ForeignKey('branch.id'))
     product_id = Column(Integer, ForeignKey('product.id'))
     city_id = Column(Integer, ForeignKey('city.id'))
-    invoice_id = Column(Integer, ForeignKey('invoice.id'))
+    invoice_id = Column(Integer, ForeignKey('invoice.invoice_id'))
 
     branch = relationship('Branch', backref='fact_table')
     product = relationship('Product', backref='fact_table')
