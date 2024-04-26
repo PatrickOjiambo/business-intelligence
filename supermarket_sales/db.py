@@ -23,12 +23,12 @@ class City(Base):
 
 class Invoice(Base):
     __tablename__ = 'invoice'
-    invoice_id = Column(Integer, primary_key=True)
+    invoice_id = Column(String, primary_key=True)
     customer_type = Column(String)
     tax = Column(Float)
     quantity = Column(Integer)
-    date = Column(DateTime)
-    time = Column(DateTime)
+    date = Column(String)
+    
     payment = Column(String)
     cost_of_goods = Column(Float)
     gross_margin_percentage = Column(Float)

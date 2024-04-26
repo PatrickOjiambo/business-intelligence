@@ -30,6 +30,24 @@ class Populate:
         )
         # city dataframe
         city_df = self.df[["City"]].drop_duplicates(subset=["City"])
+        # invoice dataframe
+        # Invoice dataframe
+        invoice_df = self.df[
+            [
+                "Invoice ID",
+                "Customer type",
+                "Tax 5%",
+                "Quantity",
+                "Date",
+               
+                "Payment",
+                "cogs",
+                "gross margin percentage",
+                "gross income",
+                "Rating",
+            ]
+        ]
+
         self.session.add_all([Branch(name=branch) for branch in branch_df["Branch"]])
         self.session.add_all(
             [
@@ -38,6 +56,24 @@ class Populate:
             ]
         )
         self.session.add_all([City(name=city) for city in city_df["City"]])
+        self.session.add_all(
+            [
+                Invoice(
+                    invoice_id=row["Invoice ID"],
+                    customer_type=row["Customer type"],
+                    tax=row["Tax 5%"],
+                    quantity=row["Quantity"],
+                    date=row["Date"],
+                    
+                    payment=row["Payment"],
+                    cost_of_goods=row["cogs"],
+                    gross_margin_percentage=row["gross margin percentage"],
+                    gross_income=row["gross income"],
+                    rating=row["Rating"],
+                )
+                for index, row in invoice_df.iterrows()
+            ]
+        )
         self.session.commit()
 
 
