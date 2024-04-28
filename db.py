@@ -35,7 +35,7 @@ class Invoice(Base):
     units_sold = Column(Integer)
     date = Column(String)
     total_sales = Column(Integer)
-    sales_method = Column(String),
+    sales_method = Column(String)
     operating_profit = Column(Integer)
     operating_margin = Column(Integer)
 
