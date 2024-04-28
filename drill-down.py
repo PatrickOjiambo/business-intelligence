@@ -10,6 +10,7 @@ session = Session()
 """How do the sales totals for a particular product break down by city within a specific state during a certain year?
 This question requires drilling down from state level to city level for detailed analysis of sales performance of a specific product over a period (in this case, a year).
 """
+#I'll assume you want to analyze sales for a product with a specific ID in the state of "California" during the year "2020".
 query = """
 SELECT
     c.name AS City_Name,
